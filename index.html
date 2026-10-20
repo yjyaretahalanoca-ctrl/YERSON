@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller Cobalto · Cerámica hecha a mano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfbfd;
+    --panel: #dce5ff;
+    --ink: #101936;
+    --cobalt: #1f3fbf;
+    --glaze: #f2c94c;
+    --on-cobalt: #fbfbfd;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "Newsreader", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1330;
+      --panel: #19215a;
+      --ink: #e8ecff;
+      --cobalt: #7f98ff;
+      --on-cobalt: #0e1330;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 1.2rem/1.6 var(--body); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--glaze); outline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+  header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; font-family: var(--display); font-weight: 800; }
+  nav { display: flex; gap: 1.5rem; font-weight: 400; font-size: 1rem; }
+  nav a { text-decoration: none; }
+  nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+
+  .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; padding: 3rem 0 5rem; }
+  h1 { font: 800 clamp(4rem, 13vw, 9.5rem)/0.85 var(--display); letter-spacing: -0.045em; color: var(--cobalt); }
+  .hero p { max-width: 34ch; margin-top: 1.75rem; font-size: 1.35rem; }
+  .btn { display: inline-block; margin-top: 1.75rem; padding: 0.85rem 1.6rem; border: 0; border-radius: 999px; background: var(--cobalt); color: var(--on-cobalt); font: 800 1rem var(--display); text-decoration: none; cursor: pointer; transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+
+  /* Piezas dibujadas con CSS */
+  .shelf { position: relative; height: 340px; border-bottom: 10px solid var(--ink); }
+  .piece { position: absolute; bottom: 0; background: var(--cobalt); }
+  .vase { left: 8%; width: 110px; height: 250px; border-radius: 45% 45% 30% 30% / 25% 25% 12% 12%; }
+  .vase::before { content: ""; position: absolute; top: -34px; left: 30px; width: 50px; height: 50px; background: var(--cobalt); border-radius: 12px 12px 4px 4px; }
+  .vase::after { content: ""; position: absolute; top: 90px; left: 0; right: 0; height: 22px; background: var(--glaze); }
+  .bowl { left: 42%; width: 190px; height: 95px; border-radius: 0 0 190px 190px; }
+  .bowl::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 14px; background: var(--glaze); }
+  .cup { right: 4%; width: 90px; height: 120px; border-radius: 6px 6px 40px 40px; }
+  .cup::before { content: ""; position: absolute; right: -34px; top: 26px; width: 44px; height: 54px; border: 12px solid var(--cobalt); border-left: 0; border-radius: 0 40px 40px 0; }
+
+  section { padding: 4.5rem 0; }
+  h2 { font: 800 clamp(2rem, 5vw, 3.2rem)/1 var(--display); letter-spacing: -0.03em; max-width: 16ch; }
+  .band { background: var(--panel); }
+
+  .items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 3rem; }
+  .items h3 { font: 800 1.5rem var(--display); }
+  .items p { margin-top: .4rem; }
+  .price { display: block; margin-top: .75rem; font: 800 1.1rem var(--display); color: var(--cobalt); }
+  .swatch { height: 170px; margin-bottom: 1.25rem; background: var(--cobalt); }
+  .items article:nth-child(1) .swatch { border-radius: 50% 50% 0 0; }
+  .items article:nth-child(2) .swatch { border-radius: 0 0 170px 170px; }
+  .items article:nth-child(3) .swatch { border-radius: 24px; }
+
+  .taller { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  form { display: grid; gap: 1rem; }
+  label { display: grid; gap: .35rem; font: 800 .95rem var(--display); }
+  input, select { padding: .8rem 1rem; border: 2px solid var(--ink); border-radius: 10px; background: var(--bg); color: var(--ink); font: 1.1rem var(--body); }
+  #msg { min-height: 1.6em; font-style: italic; }
+
+  footer { padding: 2.5rem 0; font-size: 1rem; border-top: 2px solid var(--ink); }
+
+  @media (max-width: 760px) {
+    .hero, .taller, .items { grid-template-columns: 1fr; }
+    nav { gap: 1rem; }
+    .shelf { height: 290px; }
+    .vase { left: 2%; } .bowl { left: 38%; width: 150px; } .cup { right: 8%; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <span>Taller Cobalto</span>
+      <nav><a href="#piezas">Piezas</a><a href="#clases">Clases</a></nav>
+    </header>
+
+    <div class="hero">
+      <div>
+        <h1>Barro y cobalto.</h1>
+        <p>Vajilla y jarrones torneados a mano, con un esmalte azul que cambia según la luz del día.</p>
+        <a class="btn" href="#piezas">Ver piezas</a>
+      </div>
+      <div class="shelf" role="img" aria-label="Un jarrón, un tazón y una taza de cerámica azul sobre una repisa">
+        <div class="piece vase"></div>
+        <div class="piece bowl"></div>
+        <div class="piece cup"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" id="piezas">
+    <div class="wrap">
+      <h2>Tres piezas que se repiten cada semana</h2>
+      <div class="items">
+        <article>
+          <div class="swatch"></div>
+          <h3>Jarrón alto</h3>
+          <p>Cuello angosto, ideal para una sola rama.</p>
+          <span class="price">S/ 180</span>
+        </article>
+        <article>
+          <div class="swatch"></div>
+          <h3>Tazón hondo</h3>
+          <p>Cabe una sopa grande o el desayuno completo.</p>
+          <span class="price">S/ 95</span>
+        </article>
+        <article>
+          <div class="swatch"></div>
+          <h3>Taza con asa</h3>
+          <p>Se calienta rápido y se sostiene sin quemar.</p>
+          <span class="price">S/ 60</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="clases">
+    <div class="wrap taller">
+      <div>
+        <h2>Aprende a tornear en una tarde</h2>
+        <p style="margin-top:1.25rem;max-width:36ch">Grupos de cuatro personas, tres horas, y te llevas a casa tu primera pieza ya esmaltada.</p>
+      </div>
+      <form id="form">
+        <label>Nombre <input name="nombre" required autocomplete="name"></label>
+        <label>Correo <input type="email" name="correo" required autocomplete="email"></label>
+        <label>Día
+          <select name="dia"><option>Sábado por la mañana</option><option>Sábado por la tarde</option><option>Domingo por la mañana</option></select>
+        </label>
+        <button class="btn" type="submit" style="margin-top:.5rem">Reservar mi lugar</button>
+        <p id="msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap"><footer>Taller Cobalto · Hecho a mano, una pieza a la vez.</footer></div>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var nombre = this.nombre.value.trim();
+      document.getElementById("msg").textContent = "Listo, " + nombre + ": reservaste tu lugar para el " + this.dia.value.toLowerCase() + ".";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
